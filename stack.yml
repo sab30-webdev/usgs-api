@@ -1,0 +1,26 @@
+services:
+  api:
+    image: usgs-test-image
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 8000:8000
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    networks:
+      - usgs-net
+
+  redis:
+    image: redis:7
+    deploy:
+      replicas: 1
+    ports:
+      - 6379:6379
+    networks:
+      - usgs-net
+
+networks:
+  usgs-net:
