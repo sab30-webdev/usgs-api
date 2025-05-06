@@ -1,6 +1,6 @@
 services:
   api:
-    image: usgs-test-image
+    image: usgs-api
     deploy:
       replicas: 3
       restart_policy:
