@@ -38,7 +38,7 @@ We assume that the San Francisco Bay Area is approximated by latitude(37.7749)/l
 
 Cache expiry is set to 30 seconds to align with API throttling requirement.
 
-/earthquakes/tsunami-alerts responses are sparse; response may often be empty.
+/earthquakes/tsunami-alerts responses are sparse and may often be empty. The endpoint considers the average central latitude/longitude of a given U.S. state with a 250 km radius.
 
 ---
 
