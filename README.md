@@ -21,14 +21,14 @@ A scalable, containerized FastAPI microservice that provides real-time earthquak
 
 ---
 
-## 🧱 Tech Stack
+## 🧱 Tech Stack and Image
 
 - **FastAPI**
 - **Uvicorn** (ASGI server)
 - **HTTPX** (async HTTP client)
 - **Docker & Docker Swarm**
 - **python:3.12.10-slim** (Application base image)
-- **redis:7** (cache image)
+- **redis:7** (caching image: In-memory data store used as a caching layer)
 
 ---
 
@@ -79,34 +79,44 @@ Client --> │  API Replica │ <---> │             │
 
 ---
 
-## 🐳 How to run the application
+## 🐳 How to Run the Application
 
-### 1. Build the Image
+### 1. Build the Docker Image
+
+Build the Docker image and tag it as `usgs-api`:
 
 ```bash
 docker build -t usgs-api .
 ```
 
-### 2. Initialize Docker Swarm & Deploy
+### 2. Initialize Docker Swarm and Deploy the Stack
+
+Initialize Docker Swarm (if not already initialized) and deploy the application using the provided `stack.yml` file. This deploys the stack with the service name `usgs-stack`:
 
 ```bash
 docker swarm init
 docker stack deploy -c stack.yml usgs-stack
 ```
 
-### 3. View the number of replicas for each service
+### 3. Check Running Services and Replicas
+
+Use this command to view the services running in the stack along with their replica counts. You should see **3 replicas of the API service** and **1 Redis container** running:
 
 ```bash
 docker service ls
 ```
 
-### 4. Scale API Replicas
+### 4. Scale the API Service
+
+To scale the API service from 3 to 6 replicas:
 
 ```bash
 docker service scale usgs-stack_api=6
 ```
 
-### 5. View live Logs
+### 5. View Live Logs
+
+To stream logs from the API service in real-time (e.g., when accessed via browser or `curl`):
 
 ```bash
 docker service logs -f usgs-stack_api
@@ -317,6 +327,23 @@ Response:
 .
 ```
 
+---
+
+## ⛔ Request Deduplication with Redis Cache
+
+To ensure we **do not overload the USGS service**, our application implements a **caching layer using Redis**. This prevents the same request from being made more than once within a **30-second window**.
+
+### ✅ How It Works
+
+- Each unique API request (based on query parameters like latitude, longitude, magnitude, etc.) is assigned a **cache key**.
+- When a request is received:
+  1. The app checks Redis to see if a cached response exists for the given key.
+  2. If found, it serves the cached response immediately.
+  3. If not found, it makes a **single request to the USGS API**, stores the response in Redis with a **TTL of 30 seconds**, and returns it to the user.
+- This approach reduces redundant external calls, **enhances performance**, and **protects the USGS API from abuse**.
+
+---
+
 ## 🐳 Docker Swarm Cluster Setup (Scalability Experiment)
 
 To validate the service's scalability in a container orchestration environment, a Docker Swarm cluster was set up using two EC2 instances:
@@ -396,6 +423,8 @@ usgs-stack_api.10
 The deployed API is accessible via the node's public IP and ready to serve API requests
 
 **http://16.16.159.146:8000**
+
+---
 
 ## Whats Next?
 
