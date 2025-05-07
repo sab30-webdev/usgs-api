@@ -10,7 +10,7 @@ def home():
     return "Welcome to USGS"
     
 
-@router.get("/earthquakes/sf-bay-area")
+@router.get("/v1/earthquakes/sf-bay-area")
 async def get_sf_earthquakes(start_time:str, end_time:str, min_magnitude: float=2.0):
     params={
         "starttime":start_time,
@@ -25,7 +25,7 @@ async def get_sf_earthquakes(start_time:str, end_time:str, min_magnitude: float=
     return data
 
 
-@router.get("/earthquakes/sf-bay-area/felt-reports")
+@router.get("/v1/earthquakes/sf-bay-area/felt-reports")
 async def get_sf_felt_reports(start_time:str, end_time:str, min_magnitude: float=2.0, min_felt: int=10):
     params={
         "starttime":start_time,
@@ -41,7 +41,7 @@ async def get_sf_felt_reports(start_time:str, end_time:str, min_magnitude: float
     return data
 
 
-@router.get("/earthquakes/tsunami-alerts")
+@router.get("/v1/earthquakes/tsunami-alerts")
 async def get_earthquake_with_tsunami_alerts(min_magnitude: float=2.0,state:str="California"):
 
     end_time = datetime.now().date()

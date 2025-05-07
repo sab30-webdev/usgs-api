@@ -123,10 +123,10 @@ Response:
 
 ### 2. Retrieve all earthquakes M2.0+ for the San Francisco Bay Area during a specific time range
 
-Endpoint: /earthquakes/sf-bay-area
+Endpoint: /v1/earthquakes/sf-bay-area
 
 ```bash
-curl http://localhost:8000/earthquakes/sf-bay-area?start_time=2025-01-10&end_time=2025-04-22
+curl http://localhost:8000/v1/earthquakes/sf-bay-area?start_time=2025-01-10&end_time=2025-04-22
 ```
 
 Response:
@@ -186,10 +186,10 @@ Response:
 
 ### 3. Retrieve all earthquakes M2.0+ that have 10+ felt reports for the San Francisco Bay Area during a specific time range
 
-Endpoint: /earthquakes/sf-bay-area/felt-reports
+Endpoint: /v1/earthquakes/sf-bay-area/felt-reports
 
 ```bash
-curl http://localhost:8000/earthquakes/sf-bay-area/felt-reports?start_time=2024-12-10&end_time=2025-02-20
+curl http://localhost:8000/v1/earthquakes/sf-bay-area/felt-reports?start_time=2024-12-10&end_time=2025-02-20
 ```
 
 Response:
@@ -249,12 +249,12 @@ Response:
 
 ### 4. Retrieve all earthquakes M2.0+ for the past day that had tsunami alerts for any given US state.
 
-Endpoint: /earthquakes/tsunami-alerts
+Endpoint: /v1/earthquakes/tsunami-alerts
 
 NOTE: Code logic has been modified to filter earthquake data that did not trigger tsunami alerts since there are very few instances that match the scenario , the API will most likey return empty json
 
 ```bash
-curl http://localhost:8000/earthquakes/tsunami-alerts?state=Washington
+curl http://localhost:8000/v1/earthquakes/tsunami-alerts?state=Washington
 ```
 
 Response:
