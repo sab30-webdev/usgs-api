@@ -21,15 +21,26 @@ A scalable, containerized FastAPI microservice that provides real-time earthquak
 
 ---
 
+## 🧱 Tech Stack
+
+- **FastAPI**
+- **Uvicorn** (ASGI server)
+- **HTTPX** (async HTTP client)
+- **Docker & Docker Swarm**
+- **python:3.12.10-slim** (Application base image)
+- **redis:7** (cache image)
+
+---
+
 ## 📌 Assumptions
 
-We assume that the San Francisco Bay Area is approximated by latitude/longitude around with a radius of 100km.
-
-USGS may return empty responses; service handles this gracefully.
+We assume that the San Francisco Bay Area is approximated by latitude(37.7749)/longitude(-122.4194) around with a radius of 100km.
 
 Cache expiry is set to 30 seconds to align with API throttling requirement.
 
 /earthquakes/tsunami-alerts responses are sparse; response may often be empty.
+
+---
 
 ## 📁 Project Structure
 
@@ -83,22 +94,22 @@ docker swarm init
 docker stack deploy -c stack.yml usgs-stack
 ```
 
-### 3. Scale API Replicas
+### 3. View the number of replicas for each service
+
+```bash
+docker service ls
+```
+
+### 4. Scale API Replicas
 
 ```bash
 docker service scale usgs-stack_api=6
 ```
 
-### 4. View live Logs
+### 5. View live Logs
 
 ```bash
 docker service logs -f usgs-stack_api
-```
-
-### 5. View the number of replicas for each service
-
-```bash
-docker service ls
 ```
 
 ---
