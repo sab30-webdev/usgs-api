@@ -428,7 +428,8 @@ The deployed API is accessible via the node's public IP and ready to serve API r
 
 ## Whats Next?
 
-Autoscaling Strategy
+### Autoscaling Strategy
+
 To ensure the service remains responsive under varying loads, autoscaling can be implemented using industry-standard platforms and observability tools. Here's how autoscaling would be approached in different environments:
 
 🚀 Kubernetes (K8s)
