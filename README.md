@@ -122,11 +122,21 @@ To stream logs from the API service in real-time (e.g., when accessed via browse
 docker service logs -f usgs-stack_api
 ```
 
+### 6. Cleanup
+
+To remove service and its containers
+
+```bash
+docker service rm usgs-stack_api usgs-stack_redis
+```
+
 ---
 
 ## API Usage
 
 Example requests
+
+You can either curl or enter the url in browser bar to get the response
 
 ### 1. Health Check
 
