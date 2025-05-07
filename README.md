@@ -436,29 +436,31 @@ The deployed API is accessible via the node's public IP and ready to serve API r
 
 ---
 
-## Whats Next?
+## Future Enhancements
 
 ### Autoscaling Strategy
 
-To ensure the service remains responsive under varying loads, autoscaling can be implemented using industry-standard platforms and observability tools. Here's how autoscaling would be approached in different environments:
+To ensure the service remains responsive under varying loads, autoscaling can be implemented using standard orchestration platforms and observability tools. Here's how autoscaling would be approached in different environments:
 
-🚀 Kubernetes (K8s)
-In a Kubernetes deployment, Horizontal Pod Autoscaler (HPA) can be used to automatically scale the number of pods based on resource usage metrics like CPU or memory. For more advanced use cases, HPA can also scale based on custom metrics (e.g., request rate or response latency) when integrated with Prometheus and the Kubernetes Metrics Adapter.
+🚀 **Kubernetes (K8s)**  
+In a Kubernetes deployment, the Horizontal Pod Autoscaler (HPA) can automatically scale the number of pods based on resource metrics like CPU or memory usage. For more advanced scenarios, HPA can also scale based on custom metrics (e.g., request rate or response latency) when integrated with Prometheus and the Kubernetes Metrics Adapter.
 
-☁️ AWS ECS
-In AWS ECS (Elastic Container Service), Service Auto Scaling can be configured to automatically adjust the number of running task instances based on CloudWatch metrics such as average CPU or memory usage.
+☁️ **AWS ECS**  
+In AWS Elastic Container Service (ECS), Service Auto Scaling can be configured to automatically adjust the number of running task instances based on CloudWatch metrics such as average CPU or memory utilization.
 
-📈 Prometheus for Observability and Custom Metrics
-Prometheus plays a central role in enabling observability and autoscaling by collecting real-time metrics from the application. These metrics provide valuable insights into the system’s behavior and performance, and can be used to make informed scaling decisions.
+---
 
-Key metrics monitored include:
+### Prometheus Instrumentation
 
-Request Rate: Number of incoming API requests per second
+📈 **Prometheus for Observability and Custom Metrics**
 
-Cache Efficiency: Ratio of cache hits to total requests, helping optimize Redis usage
+Prometheus enables observability by collecting real-time metrics from the application, which can be used to gain insights and inform autoscaling decisions.
 
-Response Time: Latency of API responses, useful for detecting performance bottlenecks
+Key metrics to monitor include:
 
-Error Rate: Frequency of 4xx and 5xx responses, indicating potential reliability issues
+- **Request Rate**: Number of incoming API requests per second
+- **Cache Efficiency**: Ratio of cache hits to total requests, helping optimize Redis usage
+- **Response Time**: Latency of API responses, useful for detecting performance bottlenecks
+- **Error Rate**: Frequency of 4xx and 5xx responses, indicating potential reliability issues
 
-These metrics are exposed via a /metrics endpoint and scraped by Prometheus at regular intervals. When integrated with Kubernetes HPA or AWS CloudWatch (via exporters), they enable custom, metric-based autoscaling to maintain optimal performance under varying workloads.
+These metrics would be exposed via a `/metrics` endpoint and scraped by Prometheus at regular intervals. When integrated with Kubernetes HPA or AWS CloudWatch (via exporters), they enable custom metric-based autoscaling to maintain optimal performance under dynamic workloads.
